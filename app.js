@@ -26,6 +26,9 @@ artApp.getArt = function (usersChosenAnimal) {
 
 
 artApp.displayArt = function(artArray){
+    const ulElement = document.querySelector('#artwork');
+    ulElement.innerHTML = '';
+
     artArray.forEach(function(individualArtObject){
         console.log(individualArtObject);
         const artworkTitle = individualArtObject.title;
@@ -53,13 +56,27 @@ artApp.displayArt = function(artArray){
         listElement.appendChild(heading)
         listElement.appendChild(image)
         listElement.appendChild(paragraphElement)
-
         //anotherway of writing this 
         // listElement.append(heading, image, paragraphElement)
 
-        const ulElement = document.querySelector('#artwork');
         ulElement.appendChild(listElement);
 
+
+    })
+}
+
+
+artApp.updateAnimalHeading = function(animal){
+    document.querySelector('#page-title span').textContent = `${animal}s`
+}
+
+artApp.eventListenerSetUp = function(){
+    const selectElement = document.querySelector('#animalChoices');
+    selectElement.addEventListener('change', function(){
+        artApp.getArt(this.value);
+
+        artApp.updateAnimalHeading(this.value)
+        // document.querySelector("h1").textContent = `Art with ${this.value}s!!`           <--------------- this also works 
 
     })
 }
@@ -68,12 +85,9 @@ artApp.displayArt = function(artArray){
 
 
 
-
-
-
-
 artApp.init = function () {
-    artApp.getArt('whales');
+    artApp.eventListenerSetUp();
+    artApp.getArt('bears')
 }
 
 artApp.init();
